@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EMI Calculator</title>
+<style>
+  body
+   {
+    background-color:black; 
+    font-family: Arial, sans-serif;
+  }
+
+  #container
+   {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  #emiForm 
+  {
+    background-color: #ffffff; 
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+    width: 300px;
+  }
+
+  input[type="number"] 
+  {
+    width: calc(100% - 16px);
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+
+  button 
+  {
+    background-color: blue
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 3px;
+    width: 100%;
+  }
+
+  button
+   {
+    background-color: #0056b3; 
+  }
+
+  #result
+   {
+    margin-top: 20px;
+    padding: 10px;
+    left: 50px;
+    right: 50px;
+    border-radius: 5px;
+    background-color: azure;
+    box-shadow: 10px,10px;
+    display:list-item
+  }
+
+  #result.show
+   {
+    display:flex 
+    padding: 10px;
+    left:50px;
+    right: 50px;
+    border-radius: 5px;
+    border-color: black;
+</style>
+</head>
+<body>
+  <div id="container">
+    <form id="emiForm">
+      <h2 style="text-align: center;">EMI Calculator</h2>
+      <label for="loanAmount">Loan Amount :</label>
+      <input type="number" id="loanAmount" required><br><br>
+      
+      <label for="interestRate">Annual Interest Rate (%):</label>
+      <input type="number" id="interestRate" step="0.01" required><br><br>
+      
+      <label for="loanTenure">Loan Tenure (Months):</label>
+      <input type="number" id="loanTenure" required><br><br>
+      
+      <button type="button" onclick="calculateEMI()">Calculate EMI</button>
+    </form>
+  </div>
+  
+  <div id="result"></div>
+
+  <script>
+    function calculateEMI() 
+    {
+      var loanAmount = parseFloat(document.getElementById('loanAmount').value);
+      var annualInterestRate = parseFloat(document.getElementById('interestRate').value);
+      var loanTenureMonths = parseFloat(document.getElementById('loanTenure').value);
+
+      var monthlyInterestRate = annualInterestRate / (12 * 100);
+      var emi = (loanAmount * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, loanTenureMonths)) / (Math.pow(1 + monthlyInterestRate, loanTenureMonths) - 1);
+
+      var resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = "Your monthly EMI is: " + emi.toFixed(2);
+      resultDiv.classList.add('show'); 
+    }
+  </script>
+</body>
+</html>
